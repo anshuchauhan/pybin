@@ -23,7 +23,7 @@ class Validator(object):
                 self.issues.append("%s needs to have at least 3 characters" % k)
 
                 if k != "code":
-                    tm[k] = self.strip_tags(v)
+                    tmp[k] = self.strip_tags(v)
                 else:
                     tmp[k] = v
 
@@ -61,5 +61,5 @@ class StripTags(HTMLParser.HTMLParser):
     def handle_data(self, data):
         self.stripped.append(data)
 
-    def.getSafeString(self):
+    def getSafeString(self):
         return "".join(self.stripped)

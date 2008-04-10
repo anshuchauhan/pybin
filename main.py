@@ -22,6 +22,13 @@ class MainPage(webapp.RequestHandler):
 
         user = users.get_current_user()
 
+        #XXX: need to add user interface
+        if user:
+            nick = user.nickname()
+        else:
+            nick = "anonymous"
+        write = self.response.out.write
+
         #XXX: needs validation!
 
         input = {
@@ -33,10 +40,7 @@ class MainPage(webapp.RequestHandler):
         val = Validator(input)
 
         if not val.isValid():
-            self.response.out.write(
-                Site(self, user.nickname()).getContent(notvalid=val.getIssues()), 
-                vars=val.getVars()
-            )
+            write(Site(self, nick).getContent(notvalid=val.getIssues(),vars=val.getVars())) 
             return
 
         paste = Paste()
@@ -44,13 +48,9 @@ class MainPage(webapp.RequestHandler):
         #getting only the first 8 characters of uuid:
         paste.uid = str(uuid.uuid4())[:8]
 
-        #XXX: need to add user interface
-        if user:
-            paste.userid = user.nickname()
-        else:
-            paste.userid = "anonymous"
 
-        #XXX: need to add type 
+        #XXX: need to add language type 
+        paste.name = nick
         paste.title = val.getVar("title")
         paste.comment = val.getVar("comment")
         paste.code = val.getVar("code")
@@ -58,9 +58,9 @@ class MainPage(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         if user:
-            self.response.out.write(Site(self, user.nickname()).getContent(uid=paste.uid))
+            write(Site(self, user.nickname()).getContent(uid=paste.uid))
         else:
-            self.response.out.write(Site(self, 'anonymous').getContent(uid=paste.uid))
+            write(Site(self, 'anonymous').getContent(uid=paste.uid))
 
 
 def main():
