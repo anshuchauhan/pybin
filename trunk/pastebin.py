@@ -13,7 +13,7 @@ class Site(object):
 
     def get_content(self, **kwds):
         #for debugging:
-        #write = self.ctx.response.out.write
+        self.write = self.ctx.response.out.write
 
         tvars = {"user":self.user}
         path_parts = self.ctx.request.path.split('/')
@@ -48,13 +48,12 @@ class Site(object):
 
 
     def get_display_paste(self, data, tvars, uid):
+        import xml.sax.saxutils as saxutils
+        clean_code = saxutils.escape(data.code)
         tvars = self.set_paste_data(tvars, data.title, data.code, data.comment)
         tvars["isPaste"] = True
         tvars["url"] = self.ctx.request.application_url + "/p/" + uid
-        if data.code:
-            tvars["codeList"] =  data.code.split("\n")[:-1]
-        else:
-            tvars["codeList"] = ""
+        tvars["codeList"] =  clean_code.split("\n")
         return tvars
 
     def set_paste_data(self, tvars, title, code, comment):
