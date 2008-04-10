@@ -10,7 +10,7 @@
         <h1>Hello {{ user }}</h1>
         {% if isPaste %}
         <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
-        <div class="pastedCon">
+        <div class="pasted_con">
             <h2>{{ title }}</h2>
             <p class="comment">
             {{ comment }}
@@ -18,15 +18,15 @@
             <table>
             {% for line in codeList %}
                 <tr>
-                    <td>{{ forloop.counter }}.</td> 
-                    <td>{{ line }}</td>
+                    <td class="line_number">{{ forloop.counter }}.</td> 
+                    <td class="code">{{ line }}</td>
                 <tr>
             {% endfor %}
             </table>
         </div>
         {% endif %}
         <h2>Submit Code</h2>
-        <form method="post" action="/">
+        <form method="post" action="/" class="paste">
             {% if issues %}
                 <div class="issues">
                 {% for issue in issues %}

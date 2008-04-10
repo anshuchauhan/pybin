@@ -1,1 +1,49 @@
 @import "/css/reset.css";
+
+body {
+    font-size: 90%;
+    background: #fff;
+    color: #000;
+    font-family: "Verdana", Arial, "Helvetica", sans-serif;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    padding: 3px;
+}
+h1 {
+    font-size: 120%;
+    background: #f0f0f0;
+    border: 0px solid #ededed;
+    border-bottom-width: 1px;
+}
+h2 {
+    font-size: 105%;
+}
+
+form.paste textarea {
+    width: 90%;
+}
+
+form.paste {
+    margin: 5px;
+    padding: 5px;
+    background: #e0e0e0;
+    border: 1px solid #cecece;
+}
+div.pasted_con {
+    padding: 5px;
+    margin: 5px;
+}
+div.pasted_con table {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #cecece;
+    line-height: 100%;
+    font-size: 90%;
+    font-family: Courier, serif;
+    width: 90%;
+    background: #fff;
+}
+td.code {
+}
