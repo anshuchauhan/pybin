@@ -1,5 +1,5 @@
 #labels Featured
-#How to contact developers
+How to contact developers
 
 = Contact Information =
 
