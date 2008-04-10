@@ -46,10 +46,16 @@ class Site(object):
 
         return template.render("templates/index.html", tvars)
 
+    def clean_whitespace(self, raw):
+        spaces_per_tab = 4
+        raw = "".join([ (("&nbsp;" * spaces_per_tab) if (i == "\t") else i ) for i in raw])
+        return "".join([ ("&nbsp;" if (i == " ") else i) for i in raw ])
+
+
 
     def get_display_paste(self, data, tvars, uid):
         import xml.sax.saxutils as saxutils
-        clean_code = saxutils.escape(data.code)
+        clean_code = self.clean_whitespace(saxutils.escape(data.code))
         tvars = self.set_paste_data(tvars, data.title, data.code, data.comment)
         tvars["isPaste"] = True
         tvars["url"] = self.ctx.request.application_url + "/p/" + uid
