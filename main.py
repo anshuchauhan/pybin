@@ -3,7 +3,6 @@ import uuid
 from google.appengine.api import users 
 from google.appengine.ext import webapp
 from pastebin import Site
-from paste import Paste
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -17,22 +16,44 @@ class MainPage(webapp.RequestHandler):
 
     
     def post(self):
+        
+        from paste import Paste
+        from utils import Validator
 
         user = users.get_current_user()
 
         #XXX: needs validation!
 
+        input = {
+         "title": self.request.get("title"),
+         "comment": self.request.get("comment"),
+         "code": self.request.get("code")
+        }
+
+        val = Validator(input)
+
+        if not val.isValid():
+            self.response.out.write(
+                Site(self, user.nickname()).getContent(notvalid=val.getIssues()), 
+                vars=val.getVars()
+            )
+            return
+
         paste = Paste()
 
-        paste.uid = "p" + str(uuid.uuid4())[:8]
+        #getting only the first 8 characters of uuid:
+        paste.uid = str(uuid.uuid4())[:8]
+
+        #XXX: need to add user interface
         if user:
             paste.userid = user.nickname()
         else:
             paste.userid = "anonymous"
 
-        paste.title = self.request.get("title")
-        paste.comment = self.request.get("comment")
-        paste.code = self.request.get("code")
+        #XXX: need to add type 
+        paste.title = val.getVar("title")
+        paste.comment = val.getVar("comment")
+        paste.code = val.getVar("code")
         paste.put()
 
         self.response.headers['Content-Type'] = 'text/html'
