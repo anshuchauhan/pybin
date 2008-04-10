@@ -11,14 +11,12 @@ class Site(object):
         self.ctx = ctx
         self.user = user
 
-    def getContent(self, **kwds):
+    def get_content(self, **kwds):
+        #for debugging:
+        #write = self.ctx.response.out.write
 
-        tvars = {
-            "user":self.user,
-        }
-        
+        tvars = {"user":self.user}
         path_parts = self.ctx.request.path.split('/')
-
         uid = None
 
         try:
@@ -26,26 +24,48 @@ class Site(object):
         except KeyError:
             tvars["url"] = None
 
-
         if len(path_parts) > 2 and path_parts[1] == "p":
             uid = path_parts[2]
 
         if uid:
-            tvars["isPaste"] = True
-            tvars["url"] = self.ctx.request.application_url + "/p/" + uid
             paste = Paste()
             #XXX: need to check for errors here
             data = paste.gql("WHERE uid = :1", uid)[0]
-            tvars["title"] = data.title
-            tvars["comment"] = data.comment
-            tvars["codeList"] =  data.code.split("\n")[:-1]
-            tvars["codeRaw"] = data.code
+            if data:
+                tvars = self.get_display_paste(data, tvars, uid)
+            else:
+                tvars = self.get_empty_display(tvars)
         else:
-            tvars["isPaste"] = False 
-            tvars["title"] = ""
-            tvars["comment"] = ""
-            tvars["codeRaw"] = ""
-
-
+            tvars = self.get_empty_display(tvars)
+            try:
+                tvars["issues"] = kwds["issues"]
+                t = kwds["vars"] #t for temporary
+                tvars = self.set_paste_data(tvars,t["title"],t["code"],t["comment"])
+            except KeyError:
+                tvars["issues"] = None
 
         return template.render("templates/index.html", tvars)
+
+
+    def get_display_paste(self, data, tvars, uid):
+        tvars = self.set_paste_data(tvars, data.title, data.code, data.comment)
+        tvars["isPaste"] = True
+        tvars["url"] = self.ctx.request.application_url + "/p/" + uid
+        if data.code:
+            tvars["codeList"] =  data.code.split("\n")[:-1]
+        else:
+            tvars["codeList"] = ""
+        return tvars
+
+    def set_paste_data(self, tvars, title, code, comment):
+        tvars["title"] = title
+        tvars["comment"] = comment
+        tvars["codeRaw"] = code
+        return tvars
+
+    def get_empty_display(self, tvars):
+        tvars["isPaste"] = False 
+        tvars["title"] = ""
+        tvars["comment"] = ""
+        tvars["codeRaw"] = ""
+        return tvars

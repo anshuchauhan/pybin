@@ -26,6 +26,13 @@
         {% endif %}
         <h2>Submit Code</h2>
         <form method="post" action="/">
+            {% if issues %}
+                <div class="issues">
+                {% for issue in issues %}
+                    <p class="issue">{{ issue }}</p>
+                {% endfor %}
+                <div>
+            {% endif %}
             <div>
                 <label for="title">Title:</label>
                 <input type="text" name="title" value="{{ title }}" id="title"/>
