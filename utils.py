@@ -18,14 +18,15 @@ class Validator(object):
         tmp = {}
 
         for k, v in self.input.items():
-            if len(v) < 3:
-                self.valid = False
-                self.issues.append("%s needs to have at least 3 characters" % k)
 
             if k != "code":
                 tmp[k] = self.strip_tags(v)
             else:
                 tmp[k] = v
+                if len(v) < 3:
+                    self.valid = False
+                    self.issues.append("%s needs to have at least 3 characters" % k)
+
 
         self.input = tmp
 
