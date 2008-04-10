@@ -10,9 +10,9 @@ class MainPage(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         if user:
-            self.response.out.write(Site(self, user.nickname()).getContent())
+            self.response.out.write(Site(self, user.nickname()).get_content())
         else:
-            self.response.out.write(Site(self, 'anonymous').getContent())
+            self.response.out.write(Site(self, 'anonymous').get_content())
 
     
     def post(self):
@@ -39,8 +39,8 @@ class MainPage(webapp.RequestHandler):
 
         val = Validator(input)
 
-        if not val.isValid():
-            write(Site(self, nick).getContent(notvalid=val.getIssues(),vars=val.getVars())) 
+        if not val.is_valid():
+            write(Site(self, nick).get_content(issues=val.get_issues(),vars=val.get_vars())) 
             return
 
         paste = Paste()
@@ -51,16 +51,16 @@ class MainPage(webapp.RequestHandler):
 
         #XXX: need to add language type 
         paste.name = nick
-        paste.title = val.getVar("title")
-        paste.comment = val.getVar("comment")
-        paste.code = val.getVar("code")
+        paste.title = val.get_var("title")
+        paste.comment = val.get_var("comment")
+        paste.code = val.get_var("code")
         paste.put()
 
         self.response.headers['Content-Type'] = 'text/html'
         if user:
-            write(Site(self, user.nickname()).getContent(uid=paste.uid))
+            write(Site(self, user.nickname()).get_content(uid=paste.uid))
         else:
-            write(Site(self, 'anonymous').getContent(uid=paste.uid))
+            write(Site(self, 'anonymous').get_content(uid=paste.uid))
 
 
 def main():

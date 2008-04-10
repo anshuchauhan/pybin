@@ -22,25 +22,25 @@ class Validator(object):
                 self.valid = False
                 self.issues.append("%s needs to have at least 3 characters" % k)
 
-                if k != "code":
-                    tmp[k] = self.strip_tags(v)
-                else:
-                    tmp[k] = v
+            if k != "code":
+                tmp[k] = self.strip_tags(v)
+            else:
+                tmp[k] = v
 
         self.input = tmp
 
 
 
-    def isValid(self):
+    def is_valid(self):
         return self.valid
 
-    def getIssues(self):
+    def get_issues(self):
         return self.issues
 
-    def getVars(self):
+    def get_vars(self):
         return self.input
 
-    def getVar(self, key):
+    def get_var(self, key):
         try:
             return self.input[key]
         except KeyError:
