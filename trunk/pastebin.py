@@ -5,6 +5,8 @@ from paste import Paste
 
 class Site(object):
 
+    """Currently handles the what to show on the front end"""
+
     def __init__(self, ctx, user):
         self.ctx = ctx
         self.user = user
@@ -32,6 +34,7 @@ class Site(object):
             tvars["isPaste"] = True
             tvars["url"] = self.ctx.request.application_url + "/p/" + uid
             paste = Paste()
+            #XXX: need to check for errors here
             data = paste.gql("WHERE uid = :1", uid)[0]
             tvars["title"] = data.title
             tvars["comment"] = data.comment
