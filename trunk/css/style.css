@@ -47,3 +47,9 @@ div.pasted_con table {
 }
 td.code {
 }
+div.pasted_con table td.line_number{
+    width: 40px;
+    text-align: right;
+    background-color: #eaeaea;
+    border: 0px solid #e0e0e0;
+    border-width-right: 1px;
