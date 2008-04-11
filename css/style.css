@@ -31,6 +31,13 @@ form.paste {
     background: #e0e0e0;
     border: 1px solid #cecece;
 }
+
+div.login_information {
+	text-align: right;
+	color: blue;
+	font-size: 8px;	
+}
+
 div.pasted_con {
     padding: 5px;
     margin: 5px;

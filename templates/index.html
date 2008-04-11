@@ -10,6 +10,9 @@
         {% endif %}
     </head>
     <body>
+		<div class='login_information'>
+		{{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
+		</div>
         <h1>Hello {{ user }}</h1>
         {% if isPaste %}
         <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>

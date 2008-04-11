@@ -8,12 +8,15 @@ class Site(object):
 
     """Currently handles the what to show on the front end"""
 
-    def __init__(self, ctx, user):
+    def __init__(self, ctx, values):
         self.ctx = ctx
-        self.user = user
+        self.values = values
+        self.user = values['user']
 
     def get_content(self, **kwds):
         #for debugging:
+
+        
         self.write = self.ctx.response.out.write
 
         tvars = {"user":self.user}
@@ -48,6 +51,7 @@ class Site(object):
 
         tvars["types"] = Syntax.get_type_list()
         tvars["types"].sort()
+        tvars.update(self.values)
         return template.render("templates/index.html", tvars)
 
     def clean_whitespace(self, raw):
