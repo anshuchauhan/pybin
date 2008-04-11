@@ -19,9 +19,9 @@ class Site(object):
         path_parts = self.ctx.request.path.split('/')
         uid = None
 
-        try:
+        if "uid" in kdwds:
             uid = kwds["uid"]
-        except KeyError:
+        else:
             tvars["url"] = None
 
         if len(path_parts) > 2 and path_parts[1] == "p":
@@ -37,11 +37,12 @@ class Site(object):
                 tvars = self.get_empty_display(tvars)
         else:
             tvars = self.get_empty_display(tvars)
-            try:
+            if "issues" in kwds:
                 tvars["issues"] = kwds["issues"]
-                t = kwds["vars"] #t for temporary
+                if "vars" in kwds:
+                    t = kwds["vars"] #t for temporary
                 tvars = self.set_paste_data(tvars,t["title"],t["code"],t["comment"])
-            except KeyError:
+            else:
                 tvars["issues"] = None
 
         return template.render("templates/index.html", tvars)
