@@ -16,7 +16,7 @@ class Syntax(object):
         """returns a list of languages supported"""
 
         from pygments.lexers import get_all_lexers
-        return [name for name, aliases, filetypes, mimetypes in get_all_lexers()]
+        return [(name, aliases) for name, aliases, filetypes, mimetypes in get_all_lexers()]
 
 
     @classmethod

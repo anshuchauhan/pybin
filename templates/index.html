@@ -41,9 +41,9 @@
                 <label for="type">Type:</label><br/>
                 <select name="type" id="type">
                     {% for current_type in types %}
-                    <option value="{{ current_type }}" 
-                    {% ifequal type current_type %} selected="selected" {% endifequal %}
-                    >{{ current_type }}</option>
+                    <option value="{{ current_type.1.1 }}" 
+                    {% ifequal type current_type.1.1 %} selected="selected" {% endifequal %}
+                    >{{ current_type.0 }}</option>
                     {% endfor %}
                 </select>
             </div>
