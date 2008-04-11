@@ -34,8 +34,11 @@ form.paste {
 
 div.login_information {
 	text-align: right;
-	color: blue;
-	font-size: 8px;	
+	color: #5e5e5e;
+}
+div.login_information a {
+	color: #5e5e5e;
+	font-size: 90%;	
 }
 
 div.pasted_con {
