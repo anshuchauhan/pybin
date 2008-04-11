@@ -19,7 +19,7 @@ class Site(object):
         path_parts = self.ctx.request.path.split('/')
         uid = None
 
-        if "uid" in kdwds:
+        if "uid" in kwds:
             uid = kwds["uid"]
         else:
             tvars["url"] = None
