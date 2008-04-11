@@ -66,7 +66,8 @@ class Site(object):
         tvars = self.set_paste_data(tvars, data.title, data.code, data.comment, data.type)
         tvars["isPaste"] = True
         tvars["url"] = self.ctx.request.application_url + "/p/" + uid
-        tvars["codeFormatted"] = Syntax.get_highlighted_code(data.code, data.type)
+        _type = "text" if data.type.lower() == "text only" else data.type
+        tvars["codeFormatted"] = Syntax.get_highlighted_code(data.code, _type)
         return tvars
 
     def set_paste_data(self, tvars, title, code, comment, type="Text only"):
