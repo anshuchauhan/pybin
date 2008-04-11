@@ -1,34 +1,33 @@
 import wsgiref.handlers
 import uuid
 from google.appengine.api import users
-from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from pastebin import Site
 
 class MainPage(webapp.RequestHandler):
 
     def __init__(self):
-            user = users.get_current_user()
+        """ Getting the user information so we can use it in the whole website. """
+        user = users.get_current_user()
             
-            if user:
-                    url = users.create_logout_url("/")
-                    logmessage = ""
-                    url_linktext = 'Logout'
-                    user = user.nickname()
-            else:
-                    url = users.create_login_url("/")
-                    logmessage = "You can "
-                    url_linktext = 'Login using your Google Account'
-                    user = 'anonymous'
+        if user:
+            url = users.create_logout_url("/")
+            logmessage = ""
+            url_linktext = 'Logout'
+            user = user.nickname()
+        else:
+            url = users.create_login_url("/")
+            logmessage = "You can "
+            url_linktext = 'Login using your Google Account'
+            user = 'anonymous'
 	
-            self.user_status_values = {
+        self.user_status_values = {
               'message': logmessage,
               'url_login': url,
               'url_linktext': url_linktext,
               'user': user,
               }
 
-            print self.user_status_values
 	  
 
     
@@ -43,13 +42,8 @@ class MainPage(webapp.RequestHandler):
         from paste import Paste
         from utils import Validator
 
-        user = users.get_current_user()
-
         #XXX: need to add user interface
-        if user:
-            nick = user.nickname()
-        else:
-            nick = "anonymous"
+
         write = self.response.out.write
 
         #XXX: needs validation!
@@ -70,7 +64,7 @@ class MainPage(webapp.RequestHandler):
         paste = Paste()
         #getting only the first 8 characters of uuid:
         paste.uid = str(uuid.uuid4())[:8]
-        paste.name = nick
+        paste.name = self.user_status_values['user']
         paste.title = val.get_var("title")
         paste.comment = val.get_var("comment")
         paste.code = val.get_var("code")
@@ -78,10 +72,8 @@ class MainPage(webapp.RequestHandler):
         paste.put()
 
         self.response.headers['Content-Type'] = 'text/html'
-        if user:
-            write(Site(self, self.user_status_values).get_content(uid=paste.uid))
-        else:
-            write(Site(self, self.user_status_values).get_content(uid=paste.uid))
+        write(Site(self, self.user_status_values).get_content(uid=paste.uid))
+        
             
 class Highlight(webapp.RequestHandler):
 
