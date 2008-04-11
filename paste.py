@@ -12,5 +12,6 @@ class Paste(db.Model):
     comment = db.TextProperty()
     views = db.IntegerProperty()
     tags = db.StringProperty()
+    public = db.BooleanProperty()
 
 

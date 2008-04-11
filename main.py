@@ -34,7 +34,8 @@ class MainPage(webapp.RequestHandler):
         input = {
          "title": self.request.get("title"),
          "comment": self.request.get("comment"),
-         "code": self.request.get("code")
+         "code": self.request.get("code"),
+         "type": self.request.get("type"),
         }
 
         val = Validator(input)
@@ -44,16 +45,13 @@ class MainPage(webapp.RequestHandler):
             return
 
         paste = Paste()
-
         #getting only the first 8 characters of uuid:
         paste.uid = str(uuid.uuid4())[:8]
-
-
-        #XXX: need to add language type 
         paste.name = nick
         paste.title = val.get_var("title")
         paste.comment = val.get_var("comment")
         paste.code = val.get_var("code")
+        paste.type = val.get_var("type")
         paste.put()
 
         self.response.headers['Content-Type'] = 'text/html'
@@ -64,12 +62,12 @@ class MainPage(webapp.RequestHandler):
             
 class Highlight(webapp.RequestHandler):
 
-    """Used to get the pygments css"""
+    """Used to get the syntax highlight css"""
 
     def get(self):
-        from pygments.formatters import HtmlFormatter
-        self.response.out.write(HtmlFormatter().get_style_defs('.highlight'))
-        
+        from syntax import Syntax
+        self.response.headers['Content-Type'] = 'text/css'
+        self.response.out.write(Syntax.get_syntax_css())
 
 
 def main():
