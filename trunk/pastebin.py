@@ -30,10 +30,10 @@ class Site(object):
         if uid:
             paste = Paste()
             #XXX: need to check for errors here
-            data = paste.gql("WHERE uid = :1", uid)[0]
-            if data:
+            try:
+                data = paste.gql("WHERE uid = :1", uid)[0]
                 tvars = self.get_display_paste(data, tvars, uid)
-            else:
+            except IndexError: 
                 tvars = self.get_empty_display(tvars)
         else:
             tvars = self.get_empty_display(tvars)
