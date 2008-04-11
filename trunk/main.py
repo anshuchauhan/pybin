@@ -1,20 +1,43 @@
 import wsgiref.handlers
 import uuid
-from google.appengine.api import users 
+from google.appengine.api import users
+from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from pastebin import Site
 
 class MainPage(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
 
-        self.response.headers['Content-Type'] = 'text/html'
-        if user:
-            self.response.out.write(Site(self, user.nickname()).get_content())
-        else:
-            self.response.out.write(Site(self, 'anonymous').get_content())
+    def __init__(self):
+            user = users.get_current_user()
+            
+            if user:
+                    url = users.create_logout_url("/")
+                    logmessage = ""
+                    url_linktext = 'Logout'
+                    user = user.nickname()
+            else:
+                    url = users.create_login_url("/")
+                    logmessage = "You can "
+                    url_linktext = 'Login using your Google Account'
+                    user = 'anonymous'
+	
+            self.user_status_values = {
+              'message': logmessage,
+              'url_login': url,
+              'url_linktext': url_linktext,
+              'user': user,
+              }
+
+            print self.user_status_values
+	  
 
     
+    def get(self):
+        
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write(Site(self, self.user_status_values).get_content())
+
+      
     def post(self):
         
         from paste import Paste
@@ -41,7 +64,7 @@ class MainPage(webapp.RequestHandler):
         val = Validator(input)
 
         if not val.is_valid():
-            write(Site(self, nick).get_content(issues=val.get_issues(),vars=val.get_vars())) 
+            write(Site(self, self.user_status_values).get_content(issues=val.get_issues(),vars=val.get_vars())) 
             return
 
         paste = Paste()
@@ -56,9 +79,9 @@ class MainPage(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         if user:
-            write(Site(self, user.nickname()).get_content(uid=paste.uid))
+            write(Site(self, self.user_status_values).get_content(uid=paste.uid))
         else:
-            write(Site(self, 'anonymous').get_content(uid=paste.uid))
+            write(Site(self, self.user_status_values).get_content(uid=paste.uid))
             
 class Highlight(webapp.RequestHandler):
 
