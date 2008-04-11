@@ -5,6 +5,9 @@
         <title>Paste!</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        {% if codeFormatted %}
+        <link rel="stylesheet" type="text/css" href="/highlight.css" />
+        {% endif %}
     </head>
     <body>
         <h1>Hello {{ user }}</h1>
@@ -15,18 +18,11 @@
             <p class="comment">
             {{ comment }}
             </p>
-            <table>
-            {% for line in codeList %}
-                <tr>
-                    <td class="line_number">{{ forloop.counter }}.</td> 
-                    <td class="code">{{ line }}</td>
-                <tr>
-            {% endfor %}
-            </table>
+            {{ codeFormatted }}
         </div>
         {% endif %}
-        <h2>Submit Code</h2>
         <form method="post" action="/" class="paste">
+            <h2>Submit Code</h2>
             {% if issues %}
                 <div class="issues">
                 {% for issue in issues %}
@@ -35,16 +31,27 @@
                 <div>
             {% endif %}
             <div>
+                <label for="code">Code:</label><br/>
+                <textarea id="code" name="code" rows="10" cols="30">{{ codeRaw }}</textarea>
+            </div>
+            <div>
+                <label for="type">Type:</label><br/>
+                <select name="type" id="type">
+                    {% for current_type in types %}
+                    <option value="{{ current_type }}" 
+                    {% ifequal type current_type %} selected="selected" {% endifequal %}
+                    >{{ current_type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <h2>Optional Information</h2>
+            <div>
                 <label for="title">Title:</label>
                 <input type="text" name="title" value="{{ title }}" id="title"/>
             </div>
             <div>
                 <label id="comment">Comment:</label><br/>
-                <textarea name="comment" id="comment" rows="5" cols="30">{{ comment }}</textarea>
-            </div>
-            <div>
-                <label id="code">Code:</label><br/>
-                <textarea name="code" rows="10" cols="30">{{ codeRaw }}</textarea>
+                <textarea name="comment" id="comment" rows="3" cols="30">{{ comment }}</textarea>
             </div>
             <div>
                 <input type="submit" value="Paste" name="Paste" />

@@ -23,10 +23,9 @@ class Validator(object):
                 tmp[k] = self.strip_tags(v)
             else:
                 tmp[k] = v
-                if len(v) < 3:
+                if k != "type" and len(v) < 3:
                     self.valid = False
                     self.issues.append("%s needs to have at least 3 characters" % k)
-
 
         self.input = tmp
 
