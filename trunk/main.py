@@ -61,10 +61,19 @@ class MainPage(webapp.RequestHandler):
             write(Site(self, user.nickname()).get_content(uid=paste.uid))
         else:
             write(Site(self, 'anonymous').get_content(uid=paste.uid))
+            
+class Highlight(webapp.RequestHandler):
+
+    """Used to get the pygments css"""
+
+    def get(self):
+        from pygments.formatters import HtmlFormatter
+        self.response.out.write(HtmlFormatter().get_style_defs('.highlight'))
+        
 
 
 def main():
-    application = webapp.WSGIApplication([('/.*', MainPage)], debug=True)
+    application = webapp.WSGIApplication([('/highlight.css', Highlight),('/.*', MainPage)], debug=True)
     wsgiref.handlers.CGIHandler().run(application)
 
 if __name__ == "__main__":
