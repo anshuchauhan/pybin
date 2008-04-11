@@ -70,7 +70,7 @@ class Site(object):
         tvars["codeFormatted"] = Syntax.get_highlighted_code(data.code, _type)
         return tvars
 
-    def set_paste_data(self, tvars, title, code, comment, type="Text only"):
+    def set_paste_data(self, tvars, title, code, comment, type="text"):
         tvars["title"] = title
         tvars["comment"] = comment
         tvars["codeRaw"] = code
@@ -83,5 +83,5 @@ class Site(object):
         tvars["comment"] = ""
         tvars["codeRaw"] = ""
         tvars["codeFormatted"] = None
-        tvars["type"] = "Text only"
+        tvars["type"] = "text"
         return tvars
