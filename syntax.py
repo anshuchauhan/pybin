@@ -22,11 +22,15 @@ class Syntax(object):
     @classmethod
     def get_highlighted_code(cls, code, type):
 
+
         from pygments import highlight
         from pygments.lexers import get_lexer_by_name
         from pygments.formatters import HtmlFormatter
 
-        lexer = get_lexer_by_name(type.encode().lower())
+        if not type:
+            type = "text"
+
+        lexer = get_lexer_by_name(type.encode())
         #lexer = get_lexer_by_name("python")
         formatter = HtmlFormatter(linenos=True)
         return highlight(code, lexer, formatter)
