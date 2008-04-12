@@ -1,9 +1,17 @@
 @import "/css/reset.css";
+/*
+black: #1C1D21 
+dark grey: #31353D
+blue: #445878
+white: #EEEFF7;
+teal-white: #BFD2D9
+teal: #92CDCF
+*/
 
 body {
     font-size: 90%;
-    background: #fff;
-    color: #000;
+    background: #1C1D21;
+    color: #EEEFF7;
     font-family: "Verdana", Arial, "Helvetica", sans-serif;
 }
 
@@ -13,12 +21,25 @@ h1, h2, h3 {
 }
 h1 {
     font-size: 120%;
-    background: #f0f0f0;
-    border: 0px solid #ededed;
+    background: #31353D;
+    border: 0px solid #92CDCF;
     border-bottom-width: 1px;
 }
 h2 {
     font-size: 105%;
+}
+a {
+    color: #92CDCF;
+}
+
+textarea, input, select {
+    background-color: #EEEFF7;
+    border: 1px solid #445878;
+    font-family: Courier, serif;
+    font-size: 90%;
+}
+textarea:focus, input:focus {
+    background-color: #BFD2D9;
 }
 
 form.paste textarea {
@@ -28,17 +49,16 @@ form.paste textarea {
 form.paste {
     margin: 5px;
     padding: 5px;
-    background: #e0e0e0;
+    background: #31353D;
     border: 1px solid #cecece;
 }
 
 div.login_information {
 	text-align: right;
-	color: #5e5e5e;
+	color: #EEEFF7;
+	font-size: 90%;	
 }
 div.login_information a {
-	color: #5e5e5e;
-	font-size: 90%;	
 }
 
 div.pasted_con {
@@ -55,14 +75,23 @@ div.pasted_con table {
     font-size: 90%;
     font-family: Courier, serif;
     width: 90%;
-    background: #fff;
+    background: #1C1D21;
 }
 td.code {
     padding-left: 5px;
 }
+div.pasted_con table .highlight {
+    background-color: #EEEFF7;
+}
 div.pasted_con table td.linenos{
     width: 40px;
     text-align: right;
-    background-color: #eaeaea;
+    background-color: #31353D;
     border: 0px solid #e0e0e0;
     border-width-right: 1px;
+}
+p.instructions {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #445878;
+}
