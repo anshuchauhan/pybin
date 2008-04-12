@@ -14,6 +14,11 @@
 		{{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
 		</div>
         <h1>Hello {{ user }}</h1>
+        <p class="instructions">
+        Paste! is a pastebin where you can paste a sample of code to how others without having to paste it in an IRC channel,
+        an email, or upload it to some place. In addition a pastebin provides syntax coloring, and additional features. Many more are
+        planned for Paste! Thanks for using Paste! 
+        </p>
         {% if isPaste %}
         <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
         <div class="pasted_con">
