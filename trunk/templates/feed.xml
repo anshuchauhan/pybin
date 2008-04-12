@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Paste!</title>
+
+ <link href="http://paste.appspot.com/f/" rel="self"/>
+ <link href="http://paste.appspot.com"/>
+ <updated></updated>
+ <author>
+   <name>Paste!</name>
+   <email>paste@appspot.com</email>
+ </author>
+ 
+ {% for feed in feeds %}
+ <entry>
+   <title>{{ feed.title }}</title>
+   <link href="http://paste.appspot.com/p/{{ feed.uid }}"/>
+   <id>{{ feed.uid }}</id>
+   <updated>{{ feed.date }}</updated>
+   <summary>{{ feed.comment }}</summary>
+ </entry>
+ {% endfor %}
+ 
+</feed>
