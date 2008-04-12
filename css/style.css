@@ -32,14 +32,32 @@ a {
     color: #92CDCF;
 }
 
-textarea, input, select {
+textarea, input.paste_form_ui, select {
     background-color: #EEEFF7;
     border: 1px solid #445878;
     font-family: Courier, serif;
     font-size: 90%;
 }
-textarea:focus, input:focus, select:focus{
+textarea:focus, input.paste_form_ui:focus, select:focus{
     background-color: #BFD2D9;
+}
+input.button {
+    margin: 5px 5px 5px 0px;
+}
+
+div.header {
+    background: transparent url(/images/header_bg.png) repeat-x bottom left;
+    height: 40px;
+    margin 5px 0px 5px 0px;
+    border: 0px solid #1C1D21;
+    border-bottom-width: 2px;
+    padding: 5px;
+}
+div.logo {
+    background: transparent url(/images/paste_logo_header.png) no-repeat top left;
+    float: left;
+    width: 300px;
+    height: 35px;
 }
 
 form.paste textarea {
@@ -57,8 +75,6 @@ div.login_information {
 	text-align: right;
 	color: #EEEFF7;
 	font-size: 90%;	
-    width: 99%;
-    margin: 5px;
 }
 div.login_information a {
 }
@@ -93,8 +109,9 @@ div.pasted_con table td.linenos{
     border: 0px solid #e0e0e0;
     border-width-right: 1px;
 }
-p.instructions {
+div.instructions {
     margin: 10px;
     padding: 5px;
     border: 1px solid #445878;
+    position: relative;
 }
