@@ -10,16 +10,17 @@
         {% endif %}
     </head>
     <body>
-		<div class='login_information'>
-		{{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
+		<div class='header login_information'>
+            <div class="logo"></div>
+		    {{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
 		</div>
         <h1>Hello {{ user }}</h1>
-        <p class="instructions">
+        <div class="instructions">
         Paste. Grab link. Show others.<br/><br/>
-        __paste__ is a pastebin where you can paste a sample of code to show others without having to paste it in an IRC channel,
-        an email, or upload a file. A pastebin provides syntax coloring and additional features, and many are
-        on the way. Thanks for using __paste__ 
-        </p>
+            __paste__ is a pastebin where you can paste a sample of code to show others without having to paste it in an IRC channel,
+            an email, or upload a file. A pastebin provides syntax coloring and additional features, and many are
+            on the way. Thanks for using __paste__ 
+        </div>
         {% if isPaste %}
         <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
         <div class="pasted_con">
@@ -57,14 +58,14 @@
             <h2>Optional Information</h2>
             <div>
                 <label for="title">Title:</label>
-                <input type="text" name="title" value="{{ title }}" id="title"/>
+                <input class="paste_form_ui" type="text" name="title" value="{{ title }}" id="title"/>
             </div>
             <div>
                 <label id="comment">Comment:</label><br/>
                 <textarea name="comment" id="comment" rows="3" cols="30">{{ comment }}</textarea>
             </div>
             <div>
-                <input type="submit" value="Paste" name="Paste" />
+                <input class="button" type="submit" value="Paste" name="Paste" />
             </div>
         </form>
     </body>
