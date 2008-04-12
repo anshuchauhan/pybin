@@ -38,7 +38,7 @@ textarea, input, select {
     font-family: Courier, serif;
     font-size: 90%;
 }
-textarea:focus, input:focus {
+textarea:focus, input:focus, select:focus{
     background-color: #BFD2D9;
 }
 
@@ -57,6 +57,8 @@ div.login_information {
 	text-align: right;
 	color: #EEEFF7;
 	font-size: 90%;	
+    width: 99%;
+    margin: 5px;
 }
 div.login_information a {
 }
