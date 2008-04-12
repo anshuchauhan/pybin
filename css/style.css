@@ -84,6 +84,7 @@ td.code {
 }
 div.pasted_con table .highlight {
     background-color: #EEEFF7;
+    color: #1C1D21;
 }
 div.pasted_con table td.linenos{
     width: 40px;
