@@ -10,63 +10,73 @@
         {% endif %}
     </head>
     <body>
-		<div class='header login_information'>
+		<div class='header'>
             <div class="logo"></div>
+            <p class='login_information'>
 		    {{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
-		</div>
-        <h1>Hello {{ user }}</h1>
-        <div class="instructions">
-        Paste. Grab link. Show others.<br/><br/>
-            __paste__ is a pastebin where you can paste a sample of code to show others without having to paste it in an IRC channel,
-            an email, or upload a file. A pastebin provides syntax coloring and additional features, and many are
-            on the way. Thanks for using __paste__ 
-        </div>
-        {% if isPaste %}
-        <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
-        <div class="pasted_con">
-            <h2>{{ title }}</h2>
-            <p class="comment">
-            {{ comment }}
             </p>
-            {{ codeFormatted }}
-        </div>
-        {% endif %}
-        <form method="post" action="/" class="paste">
-            <h2>Submit Code</h2>
-            {% if issues %}
-                <div class="issues">
-                {% for issue in issues %}
-                    <p class="issue">{{ issue }}</p>
-                {% endfor %}
-                <div>
-            {% endif %}
-            <div>
-                <label for="code">Code:</label><br/>
-                <textarea id="code" name="code" rows="10" cols="30">{{ codeRaw }}</textarea>
+		</div>
+        <div id="doc">
+            <h1>Hello {{ user }}</h1>
+            <div class="instructions">
+            Paste. Grab link. Show others.<br/><br/>
+                __paste__ is a pastebin where you can paste a sample of code to show others without having to paste it in an IRC channel,
+                an email, or upload a file. A pastebin provides syntax coloring and additional features, and many are
+                on the way. Thanks for using __paste__ 
             </div>
-            <div>
-                <label for="type">Type:</label><br/>
-                <select name="type" id="type">
-                    {% for current_type in types %}
-					{{ current_type }}
-                    <option value="{{ current_type.1 }}" 
-                    {% ifequal type current_type.1 %} selected="selected" {% endifequal %}
-                    >{{ current_type.0 }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <h2>Optional Information</h2>
-            <div>
-                <label for="title">Title:</label>
-                <input class="paste_form_ui" type="text" name="title" value="{{ title }}" id="title"/>
-            </div>
-            <div>
-                <label id="comment">Comment:</label><br/>
-                <textarea name="comment" id="comment" rows="3" cols="30">{{ comment }}</textarea>
-            </div>
-            <div>
-                <input class="button" type="submit" value="Paste" name="Paste" />
-            </div>
-        </form>
+            <div id="columns">
+                <div id="columnr">
+                </div>
+                <div id="columnl">
+                    {% if isPaste %}
+                    <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
+                    <div class="pasted_con">
+                        <h2>{{ title }}</h2>
+                        <p class="comment">
+                        {{ comment }}
+                        </p>
+                        {{ codeFormatted }}
+                    </div>
+                    {% endif %}
+                    <form method="post" action="/" class="paste">
+                        <h2>Submit Code</h2>
+                        {% if issues %}
+                            <div class="issues">
+                            {% for issue in issues %}
+                                <p class="issue">{{ issue }}</p>
+                            {% endfor %}
+                            <div>
+                        {% endif %}
+                        <div>
+                            <label for="code">Code:</label><br/>
+                            <textarea id="code" name="code" rows="10" cols="30">{{ codeRaw }}</textarea>
+                        </div>
+                        <div>
+                            <label for="type">Type:</label><br/>
+                            <select name="type" id="type">
+                                {% for current_type in types %}
+                                {{ current_type }}
+                                <option value="{{ current_type.1 }}" 
+                                {% ifequal type current_type.1 %} selected="selected" {% endifequal %}
+                                >{{ current_type.0 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <h2>Optional Information</h2>
+                        <div>
+                            <label for="title">Title:</label>
+                            <input class="paste_form_ui" type="text" name="title" value="{{ title }}" id="title"/>
+                        </div>
+                        <div>
+                            <label id="comment">Comment:</label><br/>
+                            <textarea name="comment" id="comment" rows="3" cols="30">{{ comment }}</textarea>
+                        </div>
+                        <div>
+                            <input class="button" type="submit" value="Paste" name="Paste" />
+                        </div>
+                    </form>
+                </div> <!-- end column left -->
+            </div> <!-- end columns -->
+        </div> <!-- end doc -->
     </body>
 </html>

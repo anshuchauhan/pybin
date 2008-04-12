@@ -60,6 +60,19 @@ div.logo {
     height: 35px;
 }
 
+div#columns {
+    position: relative;
+}
+div#columnl {
+    margin-right: 150px;
+}
+div#columnr {
+    float: right;
+    width: 135px;
+    margin-right: 5px;
+    padding: 3px;
+}
+
 form.paste textarea {
     width: 90%;
 }
@@ -71,12 +84,10 @@ form.paste {
     border: 1px solid #cecece;
 }
 
-div.login_information {
+p.login_information {
 	text-align: right;
 	color: #EEEFF7;
 	font-size: 90%;	
-}
-div.login_information a {
 }
 
 div.pasted_con {
