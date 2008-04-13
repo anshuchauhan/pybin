@@ -19,7 +19,8 @@ class Feed(webapp.RequestHandler):
         aux = {}
         aux['user'] = user
         aux['feeds'] = self.get_feeds(user=user)
-
+        self.response.headers['Content-Type'] = 'text/xml'
+        
         return self.response.out.write(template.render( "templates/feed.xml" , aux))
         
         
