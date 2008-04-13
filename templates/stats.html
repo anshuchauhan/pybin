@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <div class='stats'>
+	<ul>
+	{% for type in stats %}
+	<li>{{ type.type }} - {{ type.number }}</li>
+	{% endfor %}
+	</ul>
+ </div>
+{% endblock %}

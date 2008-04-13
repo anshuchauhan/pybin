@@ -1,8 +1,10 @@
 import wsgiref.handlers
 import uuid
 from google.appengine.ext import webapp
+from google.appengine.ext import db
 from pastebin import Site
 from paste import Paste
+from stats import Stats
 from pbuser import Pbuser
 from pbdb import Pbdb
 
@@ -66,6 +68,17 @@ class MainPage(webapp.RequestHandler):
         self.db.paste.code = val.get_var("code")
         self.db.paste.type = val.get_var("type")
         self.db.paste.put()
+
+        #Updating Type Statistics
+        self.db.aux= db.GqlQuery("SELECT * FROM Stats WHERE type = :1",val.get_var("type")).fetch(1)
+
+        if self.db.aux:
+            for stat in self.db.aux:
+                stat.number = stat.number+1
+        else:
+            stat = Stats(type=val.get_var("type"),number=1)
+
+        stat.put()
 
         self.response.headers['Content-Type'] = 'text/html'
         write(Site(self, self.user_status_values).get_content(uid=self.db.paste.uid))
