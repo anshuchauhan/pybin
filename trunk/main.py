@@ -1,32 +1,28 @@
 import wsgiref.handlers
 import uuid
-from google.appengine.api import users
 from google.appengine.ext import webapp
 from pastebin import Site
+from pbuser import Pbuser
 
 class MainPage(webapp.RequestHandler):
 
     def __init__(self):
         """ Getting the user information so we can use it in the whole website. """
-        user = users.get_current_user()
-            
-        if user:
-            url = users.create_logout_url("/")
+
+        self.curr_user = Pbuser()
+        if self.curr_user.logged_in():
             logmessage = ""
             url_linktext = 'Logout'
-            user = user.nickname()
         else:
-            url = users.create_login_url("/")
             logmessage = "You can "
-            url_linktext = 'Login using your Google Account'
-            user = 'anonymous'
+            url_linktext = 'login using your Google Account'
 	
         self.user_status_values = {
               'message': logmessage,
-              'url_login': url,
+              'url_login': self.curr_user.get_login_url(),
               'url_linktext': url_linktext,
-              'user': user,
-              }
+              'user': self.curr_user.nickname(),
+        }
 
 	  
 
