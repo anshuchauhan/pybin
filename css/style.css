@@ -126,3 +126,21 @@ div.instructions {
     border: 1px solid #445878;
     position: relative;
 }
+/****** Paste list styles ******/
+.paste_list_user_con {
+    font-size: 90%;
+    border: 1px solid #445878;
+    padding: 3px;
+    text-align: center;
+}
+.paste_list_user_con em {
+    font-size: 90%;
+    font-weight: normal;
+    font-style: italic;
+}
+.paste_list_user_con p.feed_url {
+    margin-top: 20px;
+}
+.paste_list_user_con p.feed_url a {
+    font-weight: bold;
+}
