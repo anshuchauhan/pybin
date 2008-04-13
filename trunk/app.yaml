@@ -17,6 +17,9 @@ handlers:
 - url: /f/.*
   script: feed.py
   
+- url: /s/.*
+  script: statistics.py
+  
 - url: /.*
   script: main.py
 
