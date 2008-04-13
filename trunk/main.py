@@ -2,14 +2,18 @@ import wsgiref.handlers
 import uuid
 from google.appengine.ext import webapp
 from pastebin import Site
+from paste import Paste
 from pbuser import Pbuser
+from pbdb import Pbdb
 
 class MainPage(webapp.RequestHandler):
 
     def __init__(self):
         """ Getting the user information so we can use it in the whole website. """
 
-        self.curr_user = Pbuser()
+        self.db = Pbdb()
+        self.db.paste = Paste()
+        self.curr_user = Pbuser(self.db.paste)
         if self.curr_user.logged_in():
             logmessage = ""
             url_linktext = 'Logout'
@@ -24,9 +28,7 @@ class MainPage(webapp.RequestHandler):
               'user': self.curr_user.nickname(),
         }
 
-	  
 
-    
     def get(self):
         
         self.response.headers['Content-Type'] = 'text/html'
@@ -35,7 +37,6 @@ class MainPage(webapp.RequestHandler):
       
     def post(self):
         
-        from paste import Paste
         from utils import Validator
 
         #XXX: need to add user interface
@@ -57,18 +58,17 @@ class MainPage(webapp.RequestHandler):
             write(Site(self, self.user_status_values).get_content(issues=val.get_issues(),vars=val.get_vars())) 
             return
 
-        paste = Paste()
         #getting only the first 8 characters of uuid:
-        paste.uid = str(uuid.uuid4())[:8]
-        paste.name = self.user_status_values['user']
-        paste.title = val.get_var("title")
-        paste.comment = val.get_var("comment")
-        paste.code = val.get_var("code")
-        paste.type = val.get_var("type")
-        paste.put()
+        self.db.paste.uid = str(uuid.uuid4())[:8]
+        self.db.paste.name = self.user_status_values['user']
+        self.db.paste.title = val.get_var("title")
+        self.db.paste.comment = val.get_var("comment")
+        self.db.paste.code = val.get_var("code")
+        self.db.paste.type = val.get_var("type")
+        self.db.paste.put()
 
         self.response.headers['Content-Type'] = 'text/html'
-        write(Site(self, self.user_status_values).get_content(uid=paste.uid))
+        write(Site(self, self.user_status_values).get_content(uid=self.db.paste.uid))
         
             
 class Highlight(webapp.RequestHandler):

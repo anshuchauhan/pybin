@@ -1,9 +1,6 @@
 from google.appengine.ext.webapp import template
-from google.appengine.ext import db
 
-from paste import Paste
 from syntax import Syntax
-#from paste_list import Paste_list
 
 class Site(object):
     """Currently handles the what to show on the front end"""
@@ -12,7 +9,7 @@ class Site(object):
     def __init__(self, ctx, values):
         self.ctx = ctx
         self.values = values
-        self.user = values['user']
+        self.user = self.ctx.curr_user.nickname()
 
 
     def get_content(self, **kwds):
@@ -33,9 +30,8 @@ class Site(object):
                 uid = path_parts[2]
 
         if uid:
-            paste = Paste()
             try:
-                data = paste.gql("WHERE uid = :1", uid)[0]
+                data = self.ctx.db.paste.gql("WHERE uid = :1", uid)[0]
                 tvars = self.get_display_paste(data, tvars, uid)
             except IndexError: 
                 tvars = self.get_empty_display(tvars)
@@ -49,11 +45,18 @@ class Site(object):
             else:
                 tvars["issues"] = None
 
-        #p = Paste_list(self.user)
-        #tvars["paste_list_user"] = p.get
 
+        query = self.ctx.db.paste.all()
+        try:
+            query.filter('name =', self.ctx.curr_user.nickname()).order("-date")
+            tvars["user_paste_count"] = query.count()
+            tvars["user_pastes"] = query.fetch(10)
+        except IndexError: 
+            tvars["user_paste_count"] = 0
+            tvars["user_pastes"] = None
         tvars["types"] = Syntax.get_type_list()
         tvars["types"].sort()
+        tvars["application_url"] = self.ctx.request.application_url 
         tvars.update(self.values)
         return template.render("templates/index.html", tvars)
 
