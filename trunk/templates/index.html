@@ -1,42 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
- <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-    <head>
-        <title>__paste__</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+{% extends "base.html" %}
+
+{% block header_addition %}
         {% if codeFormatted %}
         <link rel="stylesheet" type="text/css" href="/highlight.css" />
         {% endif %}
-    </head>
-    <body>
-		<div class='header'>
-            <div class="logo"></div>
-            <p class='login_information'>
-		    {{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
-            </p>
-		</div>
+{% endblock %}
+
+{% block body %}
         <div id="doc">
             <h1>Hello {{ user }}</h1>
-            <div class="instructions">
-            Paste. Grab link. Show others.<br/><br/>
-                __paste__ is a pastebin where you can paste a sample of code to show others without having to paste it in an IRC channel,
-                an email, or upload a file. A pastebin provides syntax coloring and additional features, and many are
-                on the way. Thanks for using __paste__ 
-            </div>
+            {% include "instructions.html" %}
             <div id="columns">
                 <div id="columnr">
+                    {% include "paste_list.html" %}
                 </div>
                 <div id="columnl">
                     {% if isPaste %}
-                    <p>The url to this page is: <a href="{{ url }}">{{ url }}</a>.</p>
-                    <div class="pasted_con">
-                        <h2>{{ title }}</h2>
-                        <p class="comment">
-                        {{ comment }}
-                        </p>
-                        {{ codeFormatted }}
-                    </div>
+                        {%include "code_display.html" %}
                     {% endif %}
                     <form method="post" action="/" class="paste">
                         <h2>Submit Code</h2>
@@ -78,5 +58,4 @@
                 </div> <!-- end column left -->
             </div> <!-- end columns -->
         </div> <!-- end doc -->
-    </body>
-</html>
+{% endblock %}
