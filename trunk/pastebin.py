@@ -18,7 +18,7 @@ class Site(object):
         #for debugging:
         #self.write = self.ctx.response.out.write
 
-        tvars = {"user":self.user}
+        tvars = {"user":self.user, "user_short":self.user.split("@")[0]}
         path_parts = self.ctx.request.path.split('/')
         uid = None
 
