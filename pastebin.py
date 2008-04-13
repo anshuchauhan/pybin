@@ -3,21 +3,23 @@ from google.appengine.ext import db
 
 from paste import Paste
 from syntax import Syntax
+#from paste_list import Paste_list
 
 class Site(object):
-
     """Currently handles the what to show on the front end"""
+
 
     def __init__(self, ctx, values):
         self.ctx = ctx
         self.values = values
         self.user = values['user']
 
-    def get_content(self, **kwds):
-        #for debugging:
 
-        
-        self.write = self.ctx.response.out.write
+    def get_content(self, **kwds):
+        """Returns the content for the page"""
+
+        #for debugging:
+        #self.write = self.ctx.response.out.write
 
         tvars = {"user":self.user}
         path_parts = self.ctx.request.path.split('/')
@@ -27,13 +29,11 @@ class Site(object):
             uid = kwds["uid"]
         else:
             tvars["url"] = None
-
-        if len(path_parts) > 2 and path_parts[1] == "p":
-            uid = path_parts[2]
+            if len(path_parts) > 2 and path_parts[1] == "p":
+                uid = path_parts[2]
 
         if uid:
             paste = Paste()
-            #XXX: need to check for errors here
             try:
                 data = paste.gql("WHERE uid = :1", uid)[0]
                 tvars = self.get_display_paste(data, tvars, uid)
@@ -49,16 +49,14 @@ class Site(object):
             else:
                 tvars["issues"] = None
 
+        #p = Paste_list(self.user)
+        #tvars["paste_list_user"] = p.get
+
         tvars["types"] = Syntax.get_type_list()
         tvars["types"].sort()
         tvars.update(self.values)
         return template.render("templates/index.html", tvars)
 
-    def clean_whitespace(self, raw):
-        #XXX: need to use string replace here
-        spaces_per_tab = 4
-        raw = "".join([ (("&nbsp;" * spaces_per_tab) if (i == "\t") else i ) for i in raw])
-        return "".join([ ("&nbsp;" if (i == " ") else i) for i in raw ])
 
     def get_display_paste(self, data, tvars, uid):
         import xml.sax.saxutils as saxutils
@@ -69,12 +67,14 @@ class Site(object):
         tvars["codeFormatted"] = Syntax.get_highlighted_code(data.code, data.type)
         return tvars
 
+
     def set_paste_data(self, tvars, title, code, comment, type="text"):
         tvars["title"] = title
         tvars["comment"] = comment
         tvars["codeRaw"] = code
         tvars["type"] = type 
         return tvars
+
 
     def get_empty_display(self, tvars):
         tvars["isPaste"] = False 
