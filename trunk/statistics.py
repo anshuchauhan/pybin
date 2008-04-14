@@ -1,16 +1,22 @@
 import wsgiref.handlers
+import uuid
 from google.appengine.ext import webapp
 from google.appengine.ext import db
-from google.appengine.ext.webapp import template
+from pastebin import Site
+from paste import Paste
 from stats import Stats
 from pbuser import Pbuser
 from pbdb import Pbdb
+from google.appengine.ext.webapp import template
 
 class Statistics(webapp.RequestHandler):
     def __init__(self):
         """ Getting the user information so we can use it in the whole website. """
 
+        self.db = Pbdb()
+        self.db.paste = Paste()
         self.curr_user = Pbuser(None)
+        
         if self.curr_user.logged_in():
             logmessage = ""
             url_linktext = 'Logout'
@@ -26,6 +32,7 @@ class Statistics(webapp.RequestHandler):
         }
         
     def get(self):
+        count = db.GqlQuery("SELECT * FROM Paste").count()
         query = db.GqlQuery("SELECT * FROM Stats WHERE number >= 0 ORDER BY number DESC")
         aux = {}
         aux2 = []
@@ -35,7 +42,7 @@ class Statistics(webapp.RequestHandler):
 
         aux.update(self.user_status_values)
         aux['stats'] = aux2
-        
+        aux['paste_count'] = count
         return self.response.out.write(template.render( "templates/stats.html" , aux ))
 
 
