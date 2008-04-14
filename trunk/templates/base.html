@@ -12,7 +12,7 @@
 		<div class='header'>
             <a href='http://paste.appspot.com'><div class="logo"></div></a>
             <p class='login_information'>
-		    {{ user }} | {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a> | <a href='http://paste.appspot.com'>Main Page</a> | <b><a href='http://paste.appspot.com/f/{{ user }}'>Atom Feed</a></b>
+		    {{ user }} | {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a> {% ifnotequal user 'anonymous' %}| <a href='http://paste.appspot.com'>Main Page</a> | <b><a href='http://paste.appspot.com/f/{{ user }}'>Atom Feed</a></b> {%endifnotequal%}
             </p>
 		</div>
     {% block body %}
