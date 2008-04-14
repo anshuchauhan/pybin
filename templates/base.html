@@ -10,9 +10,9 @@
     </head>
     <body>
 		<div class='header'>
-            <div class="logo"></div>
+            <a href='http://paste.appspot.com'><div class="logo"></div></a>
             <p class='login_information'>
-		    {{ user }}, {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a>
+		    {{ user }} | {{ message }} <a href='{{url_login}}'>{{ url_linktext }}</a> | <a href='http://paste.appspot.com'>Main Page</a> | <b><a href='http://paste.appspot.com/f/{{ user }}'>Atom Feed</a></b>
             </p>
 		</div>
     {% block body %}
