@@ -16,14 +16,14 @@ indexes:
   - name: date
     direction: desc
 
-# Used 345 times in query history.
+# Used 521 times in query history.
 - kind: Paste
   properties:
   - name: name
   - name: date
     direction: desc
 
-# Used 84 times in query history.
+# Used 159 times in query history.
 - kind: Stats
   properties:
   - name: number

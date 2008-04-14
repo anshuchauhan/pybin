@@ -2,16 +2,16 @@
 
 {% block body %}
 		<div id="columns">
-			<div id="columnr">
-				{% include "paste_list.html" %}
-		     </div>
 			 <div class='columnl'>
 				<h1>Language Statistics</h1>
-				<ul>
-				{% for type in stats %}
-				<li>{{ type.type }} - {{ type.number }}</li>
-				{% endfor %}
-				</ul>
+					<div class='langstats'>
+						<p>There are currently {{ paste_count }} __paste__s stored in our servers. And they were pasted as: </p>
+						<ul>
+						{% for type in stats %}
+						<li>{{ type.type }} - {{ type.number }} time{% ifnotequal type.number 1 %}s{% endifnotequal %}</li>
+						{% endfor %}
+						</ul>
+					</div>
 			 </div>
 		</div>
 {% endblock %}
