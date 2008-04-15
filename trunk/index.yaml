@@ -10,21 +10,9 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 8 times in query history.
-- kind: Paste
-  properties:
-  - name: date
-    direction: desc
-
-# Used 521 times in query history.
+# Used 30 times in query history.
 - kind: Paste
   properties:
   - name: name
   - name: date
-    direction: desc
-
-# Used 159 times in query history.
-- kind: Stats
-  properties:
-  - name: number
     direction: desc

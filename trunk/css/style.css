@@ -95,10 +95,12 @@ div.pasted_con {
     padding: 5px;
     margin: 5px;
     font-size: 110%;
-    overflow: hidden;
-    overflow-x: scroll;
-    width: 90%;
     line-height: 130%;
+}
+div.formattedCode {
+    width: 90%;
+    overflow: hidden;
+    overflow-x: auto;
 }
 div.pasted_con table {
     padding: 5px;
