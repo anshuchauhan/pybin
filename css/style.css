@@ -126,6 +126,7 @@ div.pasted_con table td.linenos{
     background-color: #31353D;
     border: 0px solid #e0e0e0;
     border-width-right: 1px;
+    padding-right: 3px;
 }
 div.instructions {
     margin: 10px;
