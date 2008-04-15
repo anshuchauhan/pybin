@@ -95,6 +95,9 @@ div.pasted_con {
     padding: 5px;
     margin: 5px;
     font-size: 110%;
+    overflow: hidden;
+    overflow-x: scroll;
+    width: 90%;
     line-height: 130%;
 }
 div.pasted_con table {
@@ -104,7 +107,6 @@ div.pasted_con table {
     line-height: 100%;
     font-size: 90%;
     font-family: Courier, serif;
-    width: 90%;
     background: #1C1D21;
 }
 td.code {
