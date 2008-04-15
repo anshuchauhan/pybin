@@ -114,6 +114,7 @@ div.pasted_con table {
 }
 td.code {
     padding-left: 5px;
+    background-color: #EEEFF7;
 }
 div.pasted_con table .highlight {
     background-color: #EEEFF7;
